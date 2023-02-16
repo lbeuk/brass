@@ -1,6 +1,6 @@
 [package]
 name = "brass"
-descritpion = "Math and statistics library for Rust"
+description = "Math and statistics library for Rust"
 version = "0.1.0"
 edition = "2021"
 license = "LICENSE.txt"

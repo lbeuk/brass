@@ -10,8 +10,8 @@ repository = "https://github.com/lbeuk/brass"
 
 [workspace]
 members = [
-    "tensor"
+    "brass_tensor"
 ]
 
 [dependencies]
-tensor = { path = "tensor"}
+brass_tensor = "0.1.0"

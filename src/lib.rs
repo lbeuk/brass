@@ -1,1 +1,1 @@
-pub use tensor;
+pub use brass_tensor;

@@ -1,5 +1,5 @@
 use std::{ptr::NonNull, ops::{Deref, DerefMut}, alloc::{self, Layout}};
-use crate::Tensor;
+use crate::{Tensor, DimsBetter};
 
 pub struct NDArray<T> {
     ptr: NonNull<T>,
@@ -8,21 +8,29 @@ pub struct NDArray<T> {
 }
 
 impl<T> NDArray<T> {
+    /// Changes the dimension of the NDArray, which is permitted so long
+    /// as the product of the dimensions remain the same.
+    pub fn reshape(&mut self, new_dims: Vec<usize>) -> bool {
+        let new_size: &usize = &new_dims.iter().product();
+        if new_size != &self.size {
+            return false;
+        }
+        self.dims = new_dims;
+        return true;
+    } 
+
     /// Allocates the space for the NDArray, but does not fill. This
     /// means that the array may contain random garbage.
-    fn allocate(dims: Vec<usize>) -> Option<NDArray<T>> {
-        // Create empty NDArray, useful to get size
+    fn _allocate(dims: Vec<usize>) -> NDArray<T> {
+        let size = dims.iter().product();
+
         let mut new_ndarray: NDArray<T> = NDArray {
             ptr: NonNull::dangling(),
             dims,
-            size: 0
+            size
         };
 
-        new_ndarray.size = new_ndarray.size();
-        let layout = match Layout::array::<T>(new_ndarray.size) {
-            Ok(l) => l,
-            Err(_) => return None
-        };
+        let layout = Layout::array::<T>(new_ndarray.size).unwrap();
 
         let new_ptr = unsafe {alloc::alloc(layout)} as *mut T;
         let new_ptr = match NonNull::new(new_ptr) {
@@ -32,29 +40,27 @@ impl<T> NDArray<T> {
         
         new_ndarray.ptr = new_ptr;
 
-        return Some(new_ndarray);
+        return new_ndarray;
     }
 }
 
 impl<T: Clone> NDArray<T> {
     /// Creates a new NDArray with a default value in each spot.
-    pub fn new_fill(dims: Vec<usize>, fill: T) -> Option<NDArray<T>> {
-        let mut new_ndarray = match NDArray::<T>::allocate(dims) {
-            Some(n) => n,
-            None => return None
-        };
+    pub fn new_fill(dims: Vec<usize>, fill: T) -> NDArray<T> {
+        let mut new_ndarray = NDArray::<T>::_allocate(dims);
 
         for elem in new_ndarray.deref_mut() {
             *elem = fill.clone();
         }
 
-        return Some(new_ndarray);
+        return new_ndarray;
     }
 }
 
 impl<T> Tensor<T> for NDArray<T> {
+    // Reimplemented to avoid unnecessary calculation
     fn size(&self) -> usize {
-        return self.dims.iter().fold(1, |size, i| size * i);
+        return self.size;
     }
 
     fn dims_vec(&self) -> Vec<usize> {
@@ -63,6 +69,12 @@ impl<T> Tensor<T> for NDArray<T> {
 
     fn ndims(&self) -> isize {
         return self.dims.len().try_into().unwrap();    
+    }
+}
+
+impl<T> DimsBetter for NDArray<T> {
+    fn dims(&self) -> &[usize] {
+        return &self.dims;
     }
 }
 

@@ -12,7 +12,7 @@ pub trait Tensor<T> {
     /// of the dimensions. Implementations may override this function for a more efficient
     /// implementation to return the size.
     fn size(&self) -> usize {
-        return self.dims_vec().iter().fold(1, |size, i| size * i);
+        return self.dims_vec().iter().product();
     }
 
     fn dims_vec(&self) -> Vec<usize>;

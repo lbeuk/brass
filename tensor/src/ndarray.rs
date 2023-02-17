@@ -8,7 +8,7 @@ pub struct NDArray<T> {
 }
 
 impl<T> NDArray<T> {
-    /// Changes the dimension of the NDArray, which is permitted so long
+    /// Changes the dimension of the [NDArray], which is permitted so long
     /// as the product of the dimensions remain the same.
     pub fn reshape(&mut self, new_dims: Vec<usize>) -> bool {
         let new_size: &usize = &new_dims.iter().product();
@@ -19,7 +19,7 @@ impl<T> NDArray<T> {
         return true;
     } 
 
-    /// Allocates the space for the NDArray, but does not fill. This
+    /// Allocates the space for the [NDArray], but does not fill. This
     /// means that the array may contain random garbage.
     fn _allocate(dims: Vec<usize>) -> NDArray<T> {
         let size = dims.iter().product();
@@ -45,7 +45,7 @@ impl<T> NDArray<T> {
 }
 
 impl<T: Clone> NDArray<T> {
-    /// Creates a new NDArray with a default value in each spot.
+    /// Creates a new [NDArray] with a default value in each spot.
     pub fn new_fill(dims: Vec<usize>, fill: T) -> NDArray<T> {
         let mut new_ndarray = NDArray::<T>::_allocate(dims);
 
@@ -58,7 +58,6 @@ impl<T: Clone> NDArray<T> {
 }
 
 impl<T> Tensor<T> for NDArray<T> {
-    // Reimplemented to avoid unnecessary calculation
     fn size(&self) -> usize {
         return self.size;
     }

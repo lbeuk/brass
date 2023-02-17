@@ -14,3 +14,4 @@ members = [
 ]
 
 [dependencies]
+tensor = { path = "ndarray"}

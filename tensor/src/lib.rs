@@ -1,5 +1,3 @@
-use std::ops::{Deref};
-
 pub mod ndarray;
 
 /// A general abstraction of an [NDArray](ndarray::NDArray) that

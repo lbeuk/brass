@@ -1,4 +1,5 @@
-#[cfg(test)]
+#![allow(warnings)]
+#![cfg(test)]
 
 use std::vec;
 

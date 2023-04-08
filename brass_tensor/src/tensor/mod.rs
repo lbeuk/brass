@@ -79,7 +79,7 @@ pub trait Tensor<T>: DerefMut<Target = [T]> {
     }
 
     /// Returns a dot product of two tensors
-    fn dot_default<'a, Rhs, RhsType>(&'a self, init: <T as Mul<RhsType>>::Output, rhs: &'a Rhs) -> Option<<T as Mul<RhsType>>::Output>
+    fn dot_default<'a, Rhs, RhsType>(&'a self, default: <T as Mul<RhsType>>::Output, rhs: &'a Rhs) -> Option<<T as Mul<RhsType>>::Output>
     where
         Rhs: Tensor<RhsType>,
         RhsType: Copy,
@@ -100,7 +100,7 @@ pub trait Tensor<T>: DerefMut<Target = [T]> {
             Some(x) => x,
             None => return None
         };
-        let mut sum = (*l)*(*r) + init;
+        let mut sum = (*l)*(*r) + default;
 
         for (l, r) in dot_iter {
             let prod = (*l)*(*r);

@@ -10,13 +10,13 @@ pub struct Matrix<T> {
 impl<T> Matrix<T> {
     /// Creates a diaganol [Matrix], using the value of [Default::default()] to fill in
     /// the values not along the diaganol.
-    pub fn diaganol_default(dvalue: T, nrow: usize, ncol: usize) -> Matrix<T>
+    pub fn diaganol(dvalue: T, nrow: usize, ncol: usize) -> Matrix<T>
     where T: Clone + Default {
-        return Self::diaganol(dvalue, T::default(), nrow, ncol);
+        return Self::diaganol_default(dvalue, T::default(), nrow, ncol);
     }
 
     /// Creates a diaganol [Matrix] of an arbitrary row and column number.
-    pub fn diaganol(dvalue: T, default: T, nrow: usize, ncol: usize) -> Matrix<T>
+    pub fn diaganol_default(dvalue: T, default: T, nrow: usize, ncol: usize) -> Matrix<T>
     where T: Clone {
         let mut data = NDArray::new_filled(vec![nrow, ncol], default);
         let mut i = 0;

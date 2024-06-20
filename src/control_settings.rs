@@ -1,5 +1,11 @@
 use std::time::Duration;
 
+/// Type of EventReciever to use for the application.
+pub enum EventRecieverType {
+    Null,
+    Threaded,
+}
+
 /// Settings for configuring the behavior of an ApplicationController instance.
 pub struct ApplicationControlSettings {
     /// Whether to have application automatically exit when Crtl + C is pressed.
@@ -11,6 +17,8 @@ pub struct ApplicationControlSettings {
     pub min_frame_duration: Duration,
     /// Reduces CPU usage by limiting the frequency of each loop iteration.
     pub min_epoch_duration: Duration,
+    /// Type of EventReciever to use for the application.
+    pub event_reciever_type: EventRecieverType,
 }
 
 impl Default for ApplicationControlSettings {
@@ -20,6 +28,7 @@ impl Default for ApplicationControlSettings {
             capture_mouse: false,
             min_frame_duration: Duration::from_secs(1) / 60,
             min_epoch_duration: Duration::from_secs(1) / 120,
+            event_reciever_type: EventRecieverType::Threaded,
         }
     }
 }

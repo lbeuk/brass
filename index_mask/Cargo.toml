@@ -1,6 +1,6 @@
 [package]
 name = "index_mask"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Luke Beukelman", "lbeuk@pm.me"]
 repository = "https://github.com/lbeuk/brass/tree/main"

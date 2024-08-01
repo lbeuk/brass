@@ -1,0 +1,2 @@
+[workspace]
+members = ["brass", "index_mask"]

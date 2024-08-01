@@ -2,7 +2,10 @@
 name = "index_mask"
 version = "0.1.0"
 edition = "2021"
+authors = ["Luke Beukelman", "lbeuk@pm.me"]
+repository = "https://github.com/lbeuk/brass/tree/main"
 description = "Tool for masking indices."
+
 license = "MIT"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
